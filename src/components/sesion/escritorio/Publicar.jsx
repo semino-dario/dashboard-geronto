@@ -13,6 +13,7 @@ export default function Publicar() {
     const [author, setAuthor] = useState(articuloEditar.author)
     const [content, setContent] = useState(articuloEditar.content)
     const [image, setImage] = useState(articuloEditar.image)
+    const [imageMessage, setImageMessage] = useState('')
     const [Error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
     const token = localStorage.getItem('token')
@@ -35,6 +36,7 @@ export default function Publicar() {
             const selectedFile = e.target.files[0]
             const formData = new FormData()
             formData.append('File', selectedFile)
+            setImageMessage('(Cargando imagen)')
 
             await axios.post(`${process.env.REACT_APP_API_URL}articulo/imagen`, formData, {
                 headers: {
@@ -47,13 +49,14 @@ export default function Publicar() {
                     const { message, objectKey } = response.data;
                     setImage(objectKey)
                     console.log(`Success: ${message}`);
+                    setImageMessage('(Imagen cargada correctamente)')
                 })
 
         }
         catch (error) {
             console.log(`ERROR DE CARGA DE IMAGEN:${error} // ${error.response.data.message}`)
             showError(`ERROR DE CARGA DE IMAGEN: ${error.response.data.message}`);
-
+            setImageMessage('(Error en la carga de la imagen. Intente nuevamente.)')
         }
     }
 
@@ -125,6 +128,7 @@ export default function Publicar() {
                         <h5>Imagen:</h5>
                         <div className="archivos">
                             <p >-sólo archivos jpg, jpeg, png, webp-</p>
+                            <p>{imageMessage}</p>
                         </div>
                         <input
                             type='file'
