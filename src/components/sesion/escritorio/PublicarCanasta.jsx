@@ -20,6 +20,7 @@ export default function PublicarCanasta() {
     const [alimentos, setAlimentos] = useState(!Array.isArray(canastaParaEditar) ? canastaParaEditar.categorias.alimentos : '')
     const [limpieza, setLimpieza] = useState(!Array.isArray(canastaParaEditar) ? canastaParaEditar.categorias.limpieza : '')
     const [medicamentos, setMedicamentos] = useState(!Array.isArray(canastaParaEditar) ? canastaParaEditar.categorias.medicamentos : '')
+    const [farmacia, setFarmacia] = useState(!Array.isArray(canastaParaEditar) ? canastaParaEditar.categorias.farmacia : '')
     const [pdf, setPdf] = useState(canastaParaEditar.pdf)
 
     const token = useParams('token')
@@ -80,6 +81,7 @@ export default function PublicarCanasta() {
         setAlimentos('')
         setLimpieza('')
         setMedicamentos('')
+        setFarmacia('')
         setPdf('')
         canastaParaEditar = []
         dispatch(mostrarCanasta())
@@ -114,6 +116,7 @@ export default function PublicarCanasta() {
                 formData.append('categorias.alimentos', alimentos);
                 formData.append('categorias.limpieza', limpieza);
                 formData.append('categorias.medicamentos', medicamentos);
+                formData.append('categorias.farmacia', farmacia);
                 formData.append('pdf', pdf);
 
 
@@ -255,6 +258,14 @@ export default function PublicarCanasta() {
                                             required={true}
                                             value={medicamentos}
                                             onChange={e => setMedicamentos(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="input-div">
+                                        <p >Insumos de farmacia:</p>
+                                        <input type="number"
+                                            placeholder="sólo números"
+                                            value={farmacia}
+                                            onChange={e => setFarmacia(e.target.value)}
                                         />
                                     </div>
                                 </div>
